@@ -17,3 +17,6 @@ npm i -D nodemon concurrently
 5. After intializing mongoose, create a account in mongodb atlas cloud and create cluster and connect the cluster with mongoose by using connection URL
    
 6.In a Node.js application using the Express framework, you can use the cors middleware to handle CORS.
+
+7. To run the both front and backend concurrently we will use: npm run dev
+
