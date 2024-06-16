@@ -1,40 +1,43 @@
-import React,{useContext,useState,useEffect} from 'react'
-import {store} from './App';
-import { Redirect } from 'react-router';
+import React, { useContext, useState, useEffect } from 'react';
+import { store } from './App';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import avatar from './avatar.png';
 
 const Myprofile = () => {
-    const [token,setToken] = useContext(store);
-    const [data,setData] = useState(null);
-    useEffect(() =>{
-        axios.get('http://localhost:5000/myprofile',{
+    const [token, setToken] = useContext(store);
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        axios.get('http://localhost:5000/myprofile', {
             headers: {
-                'x-token' : token
+                'x-token': token
             }
-        }).then(res => setData(res.data)).catch((err) => console.log(err))
-    },[])
-    if(!token){
-        return <Redirect to='/login' />
+        })
+        .then(res => setData(res.data))
+        .catch(err => console.log(err));
+    }, [token]);
+
+    if (!token) {
+        return <Navigate to='/login' />;
     }
+
     return (
         <div>
-            {
-                data &&
-            <center>
-                <br />
-                <div class="card" style={{"width": "18rem"}}>
-                <img class="card-img-top" src={avatar} alt="Card image cap" />
-                <div class="card-body">
-                    <h5 class="card-title">Welcome : {data.username}</h5>
-                    <button class="btn btn-primary" onClick={() => setToken(null)}>Logout</button>
-                    
-                </div>
-                </div>
-            </center>
-        }
+            {data && (
+                <center>
+                    <br />
+                    <div className="card" style={{ width: "18rem" }}>
+                        <img className="card-img-top" src={avatar} alt="Card image cap" />
+                        <div className="card-body">
+                            <h5 className="card-title">Welcome : {data.username}</h5>
+                            <button className="btn btn-primary" onClick={() => setToken(null)}>Logout</button>
+                        </div>
+                    </div>
+                </center>
+            )}
         </div>
-    )
+    );
 }
 
-export default Myprofile
+export default Myprofile;
